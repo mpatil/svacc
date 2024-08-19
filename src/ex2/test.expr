@@ -1,0 +1,32 @@
+{ left:
+  { 
+    left: 
+    { 
+      left: 0,
+      value : "A", 
+      right: 0
+    },
+    value: "B",
+    right: 
+    { 
+      left: 0,
+      value: "C",
+      right: 0
+    }
+  },
+  value:"E",
+  right :
+  {
+    left: 0,
+    value: "G",
+    right:
+    {
+      left: 0, 
+      value: "H",
+      right: 0
+    }
+  }
+}
+{a:{0,2,1,3}}
+
+

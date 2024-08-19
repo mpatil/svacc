@@ -1,0 +1,14 @@
+' test the break instruction
+
+proc main() {
+	n = 10
+	for (i=0; i<n; i++) {
+		print "we are now at i = ",i, "\n"
+		if (i == 5 ) {
+			break
+		}
+	}
+}
+
+main()
+

@@ -1,0 +1,21 @@
+func printd(a) {
+	n = a 
+	print "argument = ",n
+        print "\n"
+	
+	if ( (n/10) > 0 ) {
+		printd(n/10)
+	}
+	n = a
+        print n, "\n"
+	return 1
+}
+
+proc main() {
+        number = 10
+	printd(number)
+	print "done\n"
+}
+
+main()
+

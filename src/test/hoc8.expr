@@ -1,0 +1,43 @@
+# 1 "test/hoc8.expr"
+# 1 "<built-in>"
+# 1 "<command line>"
+# 1 "test/hoc8.expr"
+
+ll = 0;
+
+
+
+
+event w;
+
+vector a[5];
+
+dict b;
+dict c = { "a": 12 , "b": {"a" : {"c" : 2}}} ;
+dict d = { "a":1, "b": 2, "c": 3, "d" : 44 } ;
+b[1200] = "s" ;
+e = &d ;
+
+proc pp(k, l) {
+ for (i = 0; i < k; i++) {
+  a[i] = -1 ;
+ }
+ for (j = k; j < l; j++) {
+  a[j] = j ;
+ }
+ for (m = l; m < 5; m++) {
+  a[m] = 10 ;
+ }
+}
+
+print "my_opt = ", my_opt, "\n" ;
+my_opt = 2 ;
+
+->w;
+
+pp(1 * 1 /1, 3 / 1 * 1) ;
+
+for (j = 0; j < length(a); j++) {
+  print "a[",j, "]   ", j * a[j], "\n" ;
+}
+

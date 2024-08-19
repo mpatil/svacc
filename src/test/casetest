@@ -1,0 +1,24 @@
+// testcase: test the switch, case, and default statements
+
+proc main() {
+	x = 1
+	a = 10
+	while ( x != 0 ) {
+		switch (a)
+		print "switch value = ", a, "\n"
+		case (2) { print "we have case 2","\n"; break }
+		case (3) { print "we have case 3","\n"; break }
+		case (4) { print "we have case 4","\n"; break }
+		case (5) { print "we have case 5","\n"; break }
+		case (6) { print "we have case 6","\n"; break }
+		case (7) { print "we have case 7","\n"; break }
+		case (8) { print "we have case 8","\n"; break }
+		default  { print "default: "
+			   print a, "\n"  }
+		x = a--
+	}
+}
+
+main()
+
+			
