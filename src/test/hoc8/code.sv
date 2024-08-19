@@ -154,7 +154,7 @@ class Process;
 				"dict":		d2.sym.type_ = `DICT;
 				default :	execerror("subscript -- []", "on bad type");
 			endcase
-			d2.sym.u = d2.u; 		
+			d2.sym.u = d2.u;
 			d2.u = null;
 		    push(d1);
 		    push(d2);
@@ -172,7 +172,7 @@ class Process;
 		while (1) begin
 			Process p = new(i + 1);
 			
-			forkpc = prog[dpc].ptr - 1;	
+			forkpc = prog[dpc].ptr - 1;
 
 			fork
 				automatic int epc = dpc + 1;
@@ -196,7 +196,7 @@ class Process;
 			pc = savepc;	/* next statement */
 	endtask
 
-	task triggercode();	
+	task triggercode();
 		Symbol  sym = prog[pc++].sym;	/* VAR */
 		EventVal u;
 		`cast(u, sym.u, "->: ev", "not an event");
@@ -873,22 +873,7 @@ class Process;
 							if (sym.u.get_type() != "real" && sym.u.get_type() != "net")
 								execerror("assign", "assigning real to a non-real or non-net");
 
-							if (sym.u.get_type() == "net") begin
-								RealVal u;
-								NetVal v;
-								int result;
-								logic [31:0] net_val;
-
-								`cast(u, d2.u, "assign rhs", "not a real number");
-								`cast(v, sym.u, "assign lhs", "not a net");
-
-								net_val = u.val;
-
-								result = nu_net_bfm_set(v.name, net_val);
-
-							end
-							else
-								sym.u = d2.u.copy();
+							sym.u = d2.u.copy();
 						end
 						else
 						begin

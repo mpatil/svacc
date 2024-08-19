@@ -5,12 +5,12 @@ typedef struct {		/* Constants */
 } const_;
 
 static const_ consts[] = {
-	'{"PI",	 3.14159265358979323846},
-	'{"E",	 2.71828182845904523536},
-	'{"GAMMA", 0.57721566490153286060},  /* Euler */
-	'{"DEG",  57.29577951308232087680},  /* deg/radian */
-	'{"PHI",  1.61803398874989484820},  /* golden ratio */
-	'{"",  0.0}  
+	const_'{"PI",	 3.14159265358979323846},
+	const_'{"E",	 2.71828182845904523536},
+	const_'{"GAMMA", 0.57721566490153286060},  /* Euler */
+	const_'{"DEG",  57.29577951308232087680},  /* deg/radian */
+	const_'{"PHI",  1.61803398874989484820},  /* golden ratio */
+	const_'{"",  0.0}
 };
 
 static string builtins[] = {

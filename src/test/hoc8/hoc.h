@@ -349,15 +349,15 @@ typedef struct {   /* interpreter stack type */
 	Symbol		sym;
 } Datum;
 
-import "DPI-C" function int nu_net_bfm_register(input string net_path,input int net_handle);
-import "DPI-C" function int nu_net_bfm_get(input string net_path,output logic [31:0] net_val);
-import "DPI-C" function int nu_net_bfm_geth(input int net_handle,output logic [31:0] net_val);
-import "DPI-C" function int nu_net_bfm_force(input string net_path,input logic [31:0] net_val);
-import "DPI-C" function int nu_net_bfm_forceh(input int net_handle,input logic [31:0] net_val);
-import "DPI-C" function int nu_net_bfm_release(input string net_path);
-import "DPI-C" function int nu_net_bfm_releaseh(input int net_handle);
-import "DPI-C" function int nu_net_bfm_set(input string net_path,input logic [31:0] net_val);
-import "DPI-C" function int nu_net_bfm_seth(input int net_handle,input logic [31:0] net_val);
+//import "DPI-C" function int nu_net_bfm_register(input string net_path,input int net_handle);
+//import "DPI-C" function int nu_net_bfm_get(input string net_path,output logic [31:0] net_val);
+//import "DPI-C" function int nu_net_bfm_geth(input int net_handle,output logic [31:0] net_val);
+//import "DPI-C" function int nu_net_bfm_force(input string net_path,input logic [31:0] net_val);
+//import "DPI-C" function int nu_net_bfm_forceh(input int net_handle,input logic [31:0] net_val);
+//import "DPI-C" function int nu_net_bfm_release(input string net_path);
+//import "DPI-C" function int nu_net_bfm_releaseh(input int net_handle);
+//import "DPI-C" function int nu_net_bfm_set(input string net_path,input logic [31:0] net_val);
+//import "DPI-C" function int nu_net_bfm_seth(input int net_handle,input logic [31:0] net_val);
 
 import "DPI-C" pure function real sin (real rTheta);
 import "DPI-C" pure function real cos (real rTheta);

@@ -22,7 +22,7 @@ program automatic hoc;
 			file_din = $fopen(file_din_name, "r");
 		p = new();
 		if ($value$plusargs("input=%s", filename)) 
-`define PIPE_BASED
+//`define PIPE_BASED
 `ifdef PIPE_BASED
 		begin
 			Popen($psprintf("cpp -E %s", filename), fdrd, fdwr);
@@ -41,6 +41,7 @@ endprogram
 class Parser;
 	typedef class Process;
 	Biobuf b;
+	static int	indef, infor;
 %}
 
 %union {
@@ -255,7 +256,6 @@ dictlist:	/* nothing */	{ $$ = 0; }
 %%
 	/* end of grammar */
 	static string progname = "hoc8";
-	static int	indef, infor;
 	static Symbol	tmpfn[$];		/* tmp tracking of function nesting */
 	static int	lineoff[shortint];
 	static int	lineno = 1, lineno_= 0, lineno__= 0;

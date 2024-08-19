@@ -37,6 +37,7 @@ program automatic hoc;
 endprogram
 
 class Parser;
+	shortint progp;
 %}
 %union {
 	Symbol	sym;	/* symbol table pointer */

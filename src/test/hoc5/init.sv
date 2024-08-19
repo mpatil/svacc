@@ -6,11 +6,11 @@ typedef struct {		/* Keywords */
 } keywords_;
 
 static keywords_ keywords[] = {
-	'{"if",		`IF},
-	'{"else",	`ELSE},
-	'{"while",	`WHILE},
-	'{"print",	`PRINT},
-	'{"",		0}
+	keywords_'{"if",		`IF},
+	keywords_'{"else",	`ELSE},
+	keywords_'{"while",	`WHILE},
+	keywords_'{"print",	`PRINT},
+	keywords_'{"",		0}
 };
 
 typedef struct {		/* Constants */
@@ -19,12 +19,12 @@ typedef struct {		/* Constants */
 } const_;
 
 static const_ consts[] = {
-	'{"PI",	 3.14159265358979323846},
-	'{"E",	 2.71828182845904523536},
-	'{"GAMMA", 0.57721566490153286060},  /* Euler */
-	'{"DEG",  57.29577951308232087680},  /* deg/radian */
-	'{"PHI",  1.61803398874989484820},  /* golden ratio */
-	'{"",  0.0}  
+	const_'{"PI",	 3.14159265358979323846},
+	const_'{"E",	 2.71828182845904523536},
+	const_'{"GAMMA", 0.57721566490153286060},  /* Euler */
+	const_'{"DEG",  57.29577951308232087680},  /* deg/radian */
+	const_'{"PHI",  1.61803398874989484820},  /* golden ratio */
+	const_'{"",  0.0}
 };
 
 static string builtins[] = {

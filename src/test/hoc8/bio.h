@@ -35,11 +35,11 @@
 `define		AWRITE		2       /* write access */
 `define		AREAD		4       /* read access */
 
-import "DPI" task Popen(input string cmd, output int rdfd, output int wrfd);
-import "DPI" close = task Pclose(input int fd);
-import "DPI" fsync = task Pflush(input int fd);
-import "DPI" function int Pread(output byte unsigned out[], input int fd, input int bbuf, output int sz);
-import "DPI" function int Pwrite(input byte unsigned in[], input int fd, input int bbuf, input int sz);
+import "DPI-C" function void Popen(input string cmd, output int rdfd, output int wrfd);
+import "DPI-C" close = function int Pclose(input int fd);
+import "DPI-C" fsync = function int Pflush(input int fd);
+import "DPI-C" function int Pread(output byte unsigned out[], input int fd, input int bbuf, output int sz);
+import "DPI-C" function int Pwrite(input byte unsigned in[], input int fd, input int bbuf, input int sz);
 
 typedef class Biobuf;
 
@@ -57,9 +57,9 @@ class Biobuf;
 	int				flag = 0;		/* magic if malloc'ed */
 	longint unsigned offset = 0;	/* offset of buffer in file */
 	int				bsize;		/* size of buffer */
-	shortint		bbuf;		/* pointer to beginning of buffer */
-	shortint		ebuf;		/* pointer to end of buffer */
-	shortint		gbuf;		/* pointer to good data in buf */
+	longint		bbuf;		/* pointer to beginning of buffer */
+	longint		ebuf;		/* pointer to end of buffer */
+	longint		gbuf;		/* pointer to good data in buf */
 	byte unsigned	b[`Bungetsize+`Bsize];
 	Type			ty = _file;
 
@@ -70,11 +70,11 @@ class Biobuf;
 	endfunction
 
 	function int Binits(int unsigned f, int mode, int size);
-	
-		shortint p = 0;	
+
+		shortint p = 0;
 		p += `Bungetsize;	/* make room for Bungets */
 		size -= `Bungetsize;
-	
+
 		case(mode & ~(`OCEXEC|`ORCLOSE|`OTRUNC))
 			`OREAD: begin
 					state = `Bractive;
@@ -98,11 +98,11 @@ class Biobuf;
 		fid = f;
 		return 0;
 	endfunction
-	
+
 	function int Binit(int unsigned f, int mode);
 		return Binits(f, mode, `Bungetsize +`Bsize);
 	endfunction
-	
+
 	task close();
 		case(ty)
 			_file:		$fclose(fid);
@@ -124,12 +124,12 @@ class Biobuf;
 		endcase
 	endtask
 
-	task flush();
+	function flush();
 		case(ty)
 			_file:		$fflush(fid);
 			_process:	Pflush(fid);
 		endcase
-	endtask
+	endfunction
 
 	function int seek(shortint offset_, shortint op_);
 		case(ty)
@@ -149,7 +149,7 @@ class Biobuf;
 
 	function shortint Bgetc();
 		int i;
-	
+
 		while(1) begin
 			i = icount;
 			if(i != 0) begin
@@ -186,7 +186,7 @@ class Biobuf;
 			offset += i;
 		end
 	endfunction
-	
+
 	function int Bungetc();
 		if(state == `Bracteof)
 			state = `Bractive;
@@ -221,7 +221,7 @@ class Biobuf;
 
 	function int Bputc(byte c);
 		int i;
-	
+
 		while(1) begin
 			i = ocount;
 			if(i) begin
@@ -239,7 +239,7 @@ class Biobuf;
 		string res;
 		int ip = 0, ep = 0;
 		int i, j, k;
-	
+
 		i = -icount;
 		if(i == 0) begin
 			/*
@@ -253,7 +253,7 @@ class Biobuf;
 				return "";
 			end
 		end
-	
+
 		/*
 		 * first try in remainder of buffer (gbuf doesn't change)
 		 */
@@ -267,7 +267,7 @@ class Biobuf;
 			for (k = ip; k < ep; k++) res = {res, string'(b[k])};
 			return res;
 		end
-	
+
 		/*
 		 * copy data to beginning of buffer
 		 */
@@ -275,7 +275,7 @@ class Biobuf;
 			for (k = 0; k < i; k++)
 				b[bbuf + k] = b[ip + k];
 		gbuf = bbuf;
-	
+
 		/*
 		 * append to buffer looking for the delim
 		 */
@@ -316,7 +316,7 @@ class Biobuf;
 			end
 			ip += j;
 		end
-	
+
 		/*
 		 * full buffer without finding
 		 */
@@ -325,14 +325,14 @@ class Biobuf;
 		gbuf = bbuf;
 		return "";
 	endfunction
-	
+
 	function int Blinelen();
 		return rdline;
 	endfunction
 
 	function longint Boffset();
 		longint n;
-	
+
 		case(state)
 			`Bracteof, `Bractive: n = offset + icount;
 			`Bwactive: n = offset + (bsize + ocount);
@@ -347,7 +347,7 @@ class Biobuf;
 	function longint Bseek(longint offset, int base);
 		longint n, d;
 		int bufsz;
-	
+
 		case(state)
 			`Bracteof: begin
 					state = `Bractive;
@@ -360,7 +360,7 @@ class Biobuf;
 						n += Boffset();
 						base = 0;
 					end
-					
+
 					/*
 					 * try to seek within buffer
 					 */
@@ -378,7 +378,7 @@ class Biobuf;
 							end
 						end
 					end
-					
+
 					/*
 					 * reset the buffer
 					 */
@@ -402,7 +402,7 @@ class Biobuf;
 	function longint Bread(longint unsigned count, ref byte unsigned ap[]);
 		longint unsigned c = count, i = 0;
 		int n, ic = icount, k = 0;
-	
+
 		while(c > 0) begin
 			n = -ic;
 			if(n > c)
@@ -440,7 +440,7 @@ class Biobuf;
 		longint unsigned c = count;
 		shortint ap_idx = 0;
 		int i, n = 0, oc = ocount;
-	
+
 		while(c > 0) begin
 			n = -oc;
 			if(n > c)
@@ -470,7 +470,7 @@ class Biobuf;
 		string p, q;
 		int n, linelen, i;
 		byte unsigned nq[];
-	
+
 		n = 0;
 		while(1) begin
 			p = Brdline(delim);
@@ -510,7 +510,7 @@ task bcat(Biobuf bin, Biobuf bout, string name);
 		$write("bcat: reading %s: \n", name);	
 endtask
 
-static function void batexit();
+function static void batexit();
 	Biobuf bp;
 	int i;
 
@@ -523,7 +523,7 @@ static function void batexit();
 	end
 endfunction
 
-static function void deinstall(Biobuf bp);
+function static void deinstall(Biobuf bp);
 	int i;
 
 	for(i=0; i<`MAXBUFS; i++)
@@ -531,7 +531,7 @@ static function void deinstall(Biobuf bp);
 			wbufs[i] = null;
 endfunction
 
-static function void install(Biobuf bp);
+function static void install(Biobuf bp);
 	int i;
 
 	deinstall(bp);

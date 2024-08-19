@@ -30,6 +30,7 @@ endprogram
 
 class Parser;
 	typedef class Process;
+	static int	indef, infor;
 
 %}
 
@@ -244,7 +245,6 @@ dictlist:	/* nothing */	{ $$ = 0; }
 %%
 	/* end of grammar */
 	static string progname = "svc";
-	static int	indef, infor;
 	static Symbol	tmpfn[$];		/* tmp tracking of function nesting */
 	static int	lineoff[shortint];
 	static int	lineno = 1, lineno_= 0;

@@ -41,6 +41,8 @@ program automatic hoc;
 endprogram
 
 class Parser;
+	int	indef;
+	shortint progp;
 %}
 %union {
 	Symbol	sym;	/* symbol table pointer */
@@ -155,7 +157,6 @@ arglist:  /* nothing */ 	{ $$ = 0; }
 	string progname = "hoc6";
 	int	lineno = 1;
     static Symbol symlist[string];  /* symbol table: linked list */
-	int	indef;
 
 `include "init.sv"
 `include "code.sv"

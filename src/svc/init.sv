@@ -6,23 +6,23 @@ typedef struct {		/* Keywords */
 } keywords_;
 
 static keywords_ keywords[] = {
-	'{"proc",		`PROC},
-	'{"func",		`FUNC},
-	'{"return",		`RETURN},
-	'{"if",			`IF},
-	'{"for",		`FOR},
-	'{"else",		`ELSE},
-	'{"while",		`WHILE},
-	'{"break",		`BREAK},
-	'{"vector",		`VECTOR},
-	'{"dict",		`DICTIONARY},
-	'{"event",		`EVENT},
-	'{"case",		`CASE},
-	'{"fork",		`FORK},
-	'{"default",	`DEFAULT},
-	'{"print",		`PRINT},
-	'{"read",		`READ},
-	'{"",			0}
+	keywords_'{"proc",		`PROC},
+	keywords_'{"func",		`FUNC},
+	keywords_'{"return",		`RETURN},
+	keywords_'{"if",			`IF},
+	keywords_'{"for",		`FOR},
+	keywords_'{"else",		`ELSE},
+	keywords_'{"while",		`WHILE},
+	keywords_'{"break",		`BREAK},
+	keywords_'{"vector",		`VECTOR},
+	keywords_'{"dict",		`DICTIONARY},
+	keywords_'{"event",		`EVENT},
+	keywords_'{"case",		`CASE},
+	keywords_'{"fork",		`FORK},
+	keywords_'{"default",	`DEFAULT},
+	keywords_'{"print",		`PRINT},
+	keywords_'{"read",		`READ},
+	keywords_'{"",			0}
 };
 
 typedef struct {		/* Constants */
@@ -31,11 +31,11 @@ typedef struct {		/* Constants */
 } const_;
 
 static const_ consts[] = {
-	'{"PI",	  3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679},
-	'{"E",	  2.7182818284590452353602874713526624977572470936999595749669676277240766303535475945713821785251664274},
-	'{"GAMMA",0.5772156649015328606065120900824024310421593359399235988057672348848677267776646709369470632917467495},  /* Euler */
-	'{"PHI",  1.6180339887498948482045868343656381177203091798057628621354486227052604628189024497072072041893911374},  /* golden ratio */
-	'{"",  0.0}  
+	const_'{"PI",	  3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679},
+	const_'{"E",	  2.7182818284590452353602874713526624977572470936999595749669676277240766303535475945713821785251664274},
+	const_'{"GAMMA",0.5772156649015328606065120900824024310421593359399235988057672348848677267776646709369470632917467495},  /* Euler */
+	const_'{"PHI",  1.6180339887498948482045868343656381177203091798057628621354486227052604628189024497072072041893911374},  /* golden ratio */
+	const_'{"",  0.0}
 };
 
 typedef struct {		/* Builtins */
@@ -44,32 +44,32 @@ typedef struct {		/* Builtins */
 } bltin_;
 
 static bltin_ builtin_tsks[] = {
-	'{"rx", 2},
-	'{"", 0}
+	bltin_'{"rx", 2},
+	bltin_'{"", 0}
 };
 
 static bltin_ builtin_fns[] = {
-	'{"sin", 1},
-	'{"cos", 1},
-	'{"tan", 1},
-	'{"asin", 1},
-	'{"acos", 1},
-	'{"atan", 1},
-	'{"sinh", 1},
-	'{"cosh", 1},
-	'{"tanh", 1},
-	'{"log", 1},
-	'{"log10", 1},
-	'{"exp", 1},
-	'{"sqrt", 1},
-	'{"abs", 1},
-	'{"fabs", 1},
-	'{"round", 1},
-	'{"ceil", 1},
-	'{"floor", 1},
-	'{"length", 1},
-	'{"pow", 2},
-	'{"", 0}
+  bltin_'{"sin", 1},
+  bltin_'{"cos", 1},
+  bltin_'{"tan", 1},
+  bltin_'{"asin", 1},
+  bltin_'{"acos", 1},
+  bltin_'{"atan", 1},
+  bltin_'{"sinh", 1},
+  bltin_'{"cosh", 1},
+  bltin_'{"tanh", 1},
+  bltin_'{"log", 1},
+  bltin_'{"log10", 1},
+  bltin_'{"exp", 1},
+  bltin_'{"sqrt", 1},
+  bltin_'{"abs", 1},
+  bltin_'{"fabs", 1},
+  bltin_'{"round", 1},
+  bltin_'{"ceil", 1},
+  bltin_'{"floor", 1},
+  bltin_'{"length", 1},
+  bltin_'{"pow", 2},
+  bltin_'{"", 0}
 };
 
 function void init();	/* install constants and built-ins in table */
@@ -92,7 +92,7 @@ function void init();	/* install constants and built-ins in table */
 		Process::globals[consts[i].name] = s;
 	end
 	for (i = 0; builtin_fns[i].name != ""; i++) begin
-		FnDefn fn = new(); 
+		FnDefn fn = new();
 		s = new();
 		s.name = builtin_fns[i].name;
 		fn.nargs = builtin_fns[i].nargs;
@@ -101,7 +101,7 @@ function void init();	/* install constants and built-ins in table */
 		Process::globals[builtin_fns[i].name] = s;
 	end
 	for (i = 0; builtin_tsks[i].name != ""; i++) begin
-		FnDefn fn = new(); 
+		FnDefn fn = new();
 		s = new();
 		s.name = builtin_tsks[i].name;
 		fn.nargs = builtin_tsks[i].nargs;
@@ -113,7 +113,7 @@ function void init();	/* install constants and built-ins in table */
 endfunction
 
 static task register_builtin_fn(string name, shortint nargs);
-		FnDefn fn; 
+		FnDefn fn;
 		Symbol s;
 
 		if (Process::globals.exists(name)) begin
@@ -166,7 +166,7 @@ endfunction
 static function Symval  exec_bltin_fn(Symbol fname, Symval val[]);
 	FnDefn u;
 	`cast(u, fname.u, fname.name, "not a function");
-	case (u.nargs) 
+	case (u.nargs)
 		1:	begin
 				case (val[0].get_type())
 					"real": begin
@@ -223,7 +223,7 @@ endfunction
 static task exec_bltin_task(Symbol fname, Symval val[]);
 	FnDefn u;
 	`cast(u, fname.u, fname.name, "not a function");
-	case (u.nargs) 
+	case (u.nargs)
 		2:	begin
 				RealVal u1, u2, u3 = new();
 

@@ -50,6 +50,7 @@ endprogram
 
 class Parser;
 	typedef class Process;
+	static int	indef, infor;
 %}
 %union {
 	Symbol	sym;		/* symbol table pointer */
@@ -223,7 +224,6 @@ arglist:	/* nothing */	{ $$ = 0; }
 %%
 	/* end of grammar */
 	static string progname = "hoc7";
-	static int	indef, infor;
 	static int	lineno = 1, lineoff = 1;
 
 `include "code.sv"

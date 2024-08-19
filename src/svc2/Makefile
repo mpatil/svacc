@@ -5,11 +5,11 @@ QBLDFLAGS = -optimize -64 -top svc \
             -suppress vlog-2587  -suppress vlog-2250
 QRUNFLAGS = -simulate -64 -permissive -permit_unmatched_virtual_intf -do "run -a;q" -top svc
 
-qsvc: qrun_svc tests/100_misc.svc
-	qrun $(QRUNFLAGS) -l test.log -outdir qrun_svc.out +input=tests/100_misc.svc
+qsvc: qrun_svc test.expr
+	qrun $(QRUNFLAGS) -l test.log -outdir qrun_svc.out +input=test.expr
 
-svc: simv tests/100_misc.svc
-	simv -l test.log +input=tests/100_misc.svc
+svc: simv test.expr
+	simv -l test.log +input=test.expr
 
 qrun_svc: svc.sv
 	/apps/mentor/questa_sim-2023.1/questasim/linux_x86_64/qrun $(QBLDFLAGS) -outdir qrun_svc.out svc.sv
@@ -27,4 +27,4 @@ yacc:
 
 clean:
 	/bin/rm -rf *.log vc_hdrs.h svc.sv y.output
-	/bin/rm -rf simv* ucli.key csrc simv.daidir  DVEfiles inter.vpd
+	/bin/rm -rf simv* ucli.key csrc simv.daidir  DVEfiles inter.vpd 

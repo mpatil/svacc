@@ -34,6 +34,7 @@ program automatic hoc;
 endprogram
 
 class Parser;
+    static Symbol symlist[string];  /* symbol table: linked list */
 %}
 %union {
 	real	val;	/* actual value */
@@ -76,7 +77,6 @@ expr:	  NUMBER
 	/* end of grammar */
 	string progname = "hoc3";
 	int	lineno = 1;
-    static Symbol symlist[string];  /* symbol table: linked list */
 
 `include "init.sv"
 
